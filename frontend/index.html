@@ -13,7 +13,7 @@
         <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <div class="sidebar-header">
-                <h2>Vet Clinic</h2>
+                <h2><button class="sidebar-title-button" onclick="loadMainPage()">Vet Clinic</button></h2>
             </div>
             <ul class="nav-list">
                 <li><button class="nav-button" onclick="loadSection('owners')">Owners</button></li>
@@ -33,6 +33,19 @@
             </header>
 
             <main>
+                <!-- Main Page Section -->
+                <section id="mainPage" class="main-page-section">
+                    <div class="main-page-container">
+                        <h1 class="main-title">Cute Vet Clinic</h1>
+                        <div class="search-container">
+                            <input type="text" id="petNameSearch" placeholder="Search by Pet Name" class="search-input" />
+                            <button onclick="searchAppointments()" class="search-button">Search</button>
+                            <button onclick="loadMainPage()" class="reset-button">Reset</button>
+                        </div>
+                        <div id="searchResults"></div>
+                    </div>
+                </section>
+
                 <section id="content">
                     <p>Loading data...</p>
                 </section>

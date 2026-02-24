@@ -5,6 +5,127 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Sidebar Title Button */
+.sidebar-title-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.sidebar-title-button:hover {
+  color: #3498db;
+}
+
+/* Main Page Styles */
+.main-page-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: linear-gradient(135deg, #dbe0f7 0%, #e6d8f5 100%);
+  padding: 40px 20px;
+}
+
+.main-page-container {
+  text-align: center;
+  background: white;
+  padding: 60px 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+}
+
+.main-title {
+  font-size: 48px;
+  color: #023e8a;
+  margin-bottom: 40px;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 1px;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.search-input {
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #023e8a;
+}
+
+.search-button {
+  padding: 12px 20px;
+  background-color: #023e8a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+.search-button:hover {
+  background-color: #0353a4;
+}
+
+.reset-button {
+  padding: 12px 20px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+.reset-button:hover {
+  background-color: #5a6268;
+}
+
+#searchResults {
+  margin-top: 30px;
+}
+
+#searchResults table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#searchResults th, #searchResults td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+#searchResults th {
+  background-color: #023e8a;
+  color: white;
+}
+
+#searchResults tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
 
 * {
     margin: 0;
@@ -126,6 +247,14 @@ header {
 }
 
 .hidden {
+    display: none;
+}
+
+.main-page-section.hidden {
+    display: none;
+}
+
+#content.hidden {
     display: none;
 }
 
