@@ -5,9 +5,10 @@
 This project simulates the data management and analysis of a veterinary clinic using SQL. It includes two main parts:
 * **Database Creation**: Building a fully relational vet clinic database using CREATE TABLE and INSERT INTO SQL statements, with realistic mock data generated through ChatGPT.
 * **Data Analysis**: Running SQL queries to extract business insights from the dataset — helping to understand operations, client behavior, and financial performance.
-* **VetClinic Management System Flask Web app**: Building a Flask, MS SQL Server, and Docker-based web application to display database. 
+* **VetClinic Management System Flask Web app**: Building a Flask, MS SQL Server, and Docker-based web application to display database.
+* **Performance testing with increasing user load**: Testing scalability of VetClinic Flask application under increasing user load.
 
-The goal of this project is to demonstrate proficiency in database design, data population, and SQL-based data analysis
+The goal of this project is to demonstrate proficiency in database design, data population, SQL-based data analysis, and a simple testing.
 
 ## Database Structure
 The database consists of six interrelated tables, each representing a core entity in a veterinary clinic: 
@@ -74,7 +75,9 @@ After creating and populating the database, multiple SQL queries were executed t
 * ChatGPT (for mock data generation)
 * Flask (Python)
 * Docker
-* HTML, CSS, Javascript 
+* HTML, CSS, Javascript
+* Locust
+* CPU and Momery monitoring file
 
 ## VetClinic Management System Flask Web app  
 
@@ -90,11 +93,93 @@ The system is powered by Microsoft SQL Server for data storage and is fully cont
 
 * Designed an interactive, data-driven interface using HTML, CSS, and JavaScript
 
-* Demonstrates full-stack development, database connectivity, and containerized deployment 
+* Demonstrates full-stack development, database connectivity, and containerized deployment
+
+## Simple Performance testing using Locust 
+
+**Environment**
+
+Flask web : http://localhost:5000/  
+Locust : http://localhost:8089
+
+**Test Scenarios**
+
+* Page loads ((GET /pets, /vets, /appointments, etc)
+* Search/filter endpoints
+
+| Stage     | User                | Ramp-up              |  Duration
+| --------- | --------------------|----------------------|-----------------------| 
+| Moderate  | 10                  | 2                    | 3 mins                |
+| Heavy     | 50                  | 5                    | 3 mins                |
+| High      | 100                 | 10                   | 3 mins                |
+| Very High | 500                 | 50                   | 3 mins                |
+
+**User Load Pattern**
+* 10 → 50 → 100 → 500 users
+* Ramp up proportional to user count
+* 3 minutes per test
+
+**Metrics**  
+* Average Response time
+* 95th percentile
+* Failure
+* Requests per Second (RPS)
+* CPU and Momory
+
+**Results** 
+
+[ 10 users ] 
+
+* Average Response time: 11.75 ms
+* 95th percentile time: 26 ms
+* Requests per Second (PRS): 4.9
+* Failure: 0
+* CPU and Memory: check system_metrics_10_users.csv
+
+[ 50 users ] 
+
+* Average Response time: 9.46 ms
+* 95th percentile time: 21 ms
+* Requests per Second (PRS): 25
+* Failure: 0
+* CPU and Memory: check system_metrics_50_users.csv
+
+[ 100 users ]
+
+* Average Response time: 18.73 ms
+* 95th percentile time: 31 ms
+* Requests per Second (PRS): 46.6
+* Failure: 0
+* CPU and Memory: check system_metrics_100_users.csv
+
+[ 500 users ] 
+
+* Average Response time: 8844.52 ms
+* 95th percentile time: 15000 ms
+* Requests per Second (PRS): 46.6 
+* Failure: 0
+* CPU and Memory: check system_metrics_500_users.csv
+
+| Metric    |  50 User (OK)       | 100 Users (At Capacity)  | 500 Users (Overloaded)
+| --------- | --------------------|----------------------|-----------------------| 
+| Throughout (RPS)  | 25          | 46.6                 | 46.6                  |
+| Avg Latency     | 9.46 ms       | 18.73 ms             | 8844.52 ms            |
+| User Experience   | Instant     | Fast                  | Unusable             |
+
+1. Based on the test with 100 users and 500 users, the RPS stayed exactly the same (46.6). This confirms that the system cannot process more than 47 requests per second.
+That is, no matter how many users we add, the limit is 46.6 requests per second.
+
+2. On the test with 500 users, since the server cannot process requests faster, (compared to the test with 100users) the extra 400 users are just waiting in a queue. That is why the average response time went up from 18.73 ms to 8844.52 ms.
+   
+3. A 95th percentile time (15000 ms) means that 5% of users are waiting 15 seconds or more. 
+
+
 
 **Limit** : This web application is a basic prototype of the full system. It still requires further development to add advanced
 features.  
 
 **Web Image** 
+
+<img width="1262" height="619" alt="main_page" src="https://github.com/user-attachments/assets/7368c65d-7e22-4602-8ece-3b4614cc6f78" />
 
 ![alt text](image.png)
