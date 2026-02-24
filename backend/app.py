@@ -172,6 +172,30 @@ def add_medical_record():
     params = (data['appointment_id'], data['diagnosis'], data['treatment'], data['notes'], data['billing_amount'])
     return jsonify(query_db(query, params))
 
+# --------- Search Appointments --------- 
+ 
+@app.route('/appointments/search')
+def search_appointments():
+    try:
+        pet_name = request.args.get('pet_name', '')
+        
+        # Query database for matching appointments by pet name
+        query = """
+        SELECT a.appointment_id, p.pet_name, v.first_name + ' ' + v.last_name AS vet_name,
+               a.date_time, a.reason, o.first_name + ' ' + o.last_name AS owner_name, v.speciality
+        FROM Appointments a
+        JOIN Pets p ON a.pet_id = p.pet_id
+        JOIN Vets v ON a.vet_id = v.vet_id
+        JOIN Owners o ON p.owner_id = o.owner_id
+        WHERE p.pet_name LIKE ?
+        ORDER BY a.date_time DESC
+        """
+        params = [f"%{pet_name}%"]
+            
+        return jsonify(query_db(query, params))
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 # --- health check ----- # 
 
 @app.route('/health')
